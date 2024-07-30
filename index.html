@@ -49,16 +49,16 @@
 <body>
     <div class="container">
         <div class="form-group">
-            <label for="amount">금액:</label>
-            <input type="number" id="amount" placeholder="금액을 입력하세요">
-        </div>
-        <div class="form-group">
-            <label for="from-currency">출발 통화:</label>
+            <label for="from-currency">계산할 통화선택:</label>
             <select id="from-currency">
                 <option value="USD">USD - 미국 달러</option>
                 <option value="JPY">JPY - 일본 엔</option>
                 <option value="PHP">PHP - 필리핀 페소</option>
             </select>
+        </div>
+        <div class="form-group">
+            <label for="amount">금액:</label>
+            <input type="number" id="amount" placeholder="금액을 입력하세요">
         </div>
         <div class="form-group">
             <label for="exchange-rate">환율 (목표 통화: 원화):</label>
@@ -74,7 +74,7 @@
             const fromCurrency = document.getElementById('from-currency').value;
             const exchangeRate = document.getElementById('exchange-rate').value;
             const result = amount * exchangeRate;
-            document.getElementById('result').innerText = `결과: ${result.toFixed(2)} 원`;
+            document.getElementById('result').innerText = `결과: ${result.toLocaleString()} 원`;
         }
     </script>
 </body>
