@@ -80,19 +80,37 @@
             <label for="amount">금액:</label>
             <input type="number" id="amount" placeholder="금액을 입력하세요">
         </div>
-        <div class="form-group">
-            <label for="exchange-rate">환율 (목표 통화: 원화):</label>
-            <input type="number" id="exchange-rate" placeholder="환율을 입력하세요">
-        </div>
         <button onclick="calculate()">계산하기</button>
         <div id="result"></div>
     </div>
 
     <script>
-        function calculate() {
+        async function fetchExchangeRates() {
+            const response = await fetch('https://born520.github.io/exchaangerate/');
+            const data = await response.json();
+            return data;
+        }
+
+        async function calculate() {
             const amount = document.getElementById('amount').value;
             const fromCurrency = document.getElementById('from-currency').value;
-            const exchangeRate = document.getElementById('exchange-rate').value;
+            const rates = await fetchExchangeRates();
+            let exchangeRate;
+
+            switch (fromCurrency) {
+                case 'USD':
+                    exchangeRate = rates.USD;
+                    break;
+                case 'JPY':
+                    exchangeRate = rates.JPY;
+                    break;
+                case 'PHP':
+                    exchangeRate = rates.PHP;
+                    break;
+                default:
+                    exchangeRate = 1;
+            }
+
             const result = amount * exchangeRate;
             document.getElementById('result').innerText = `결과: ${result.toLocaleString()} 원`;
         }
